@@ -15,5 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/message',function(){
-    return "HELLO WORLD";
+    return response()->json([
+        "message"=>"hello world"]);
+   
 });
