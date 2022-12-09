@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Stores extends Model
 {
     use HasFactory;
+    protected $fillable = ['name',
+                            'task_id',
+                            'url',
+                            'address',
+                            'latitude',
+                            'longitude',
+                            'embeddedmap'
+                            ];
 }
