@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Task_Store_Status;
+use App\Models\BankingStatus;
 use Illuminate\Http\Request;
 
-class TaskStoreStatusController extends Controller
+class BankingStatusController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,12 +13,14 @@ class TaskStoreStatusController extends Controller
      */
     public function index()
     {
-        return Task_Store_Status::all();
+        return BankingStatus::all();
     }
-    public function getTaskStoreStatus($user_id) {
-        if (Task_Store_Status::where('user_id', $user_id)->exists()){
-            $Task_Store_Status = Task_Store_Status::where('user_id', $user_id)->get();
-            return response($Task_Store_Status, 200);}
+
+    
+    public function getBankingStatus($user_id) {
+        if (BankingStatus::where('user_id', $user_id)->exists()){
+            $BankingStatus = BankingStatus::where('user_id', $user_id)->get();
+            return response($BankingStatus, 200);}
             else{
                 return response()->json([
                     "message" => "status not found"
@@ -26,6 +28,7 @@ class TaskStoreStatusController extends Controller
             }
           
       }
+
 
     /**
      * Store a newly created resource in storage.
@@ -35,17 +38,17 @@ class TaskStoreStatusController extends Controller
      */
     public function store(Request $request)
     {
-        if (Task_Store_Status::where('user_id', $request->user_id)->exists()){
+        if (BankingStatus::where('user_id', $request->user_id)->exists()){
             return response()->json([
                 "message" => "user id exists"
               ],202);
         }else{
-        $Task_Store_Status = Task_Store_Status::create([
+        $BankingStatus = BankingStatus::create([
             'user_id'=>$request->user_id,
         ]);
         return response()->json([
             'status'=>200,
-            'data'=>$Task_Store_Status]);
+            'data'=>$BankingStatus]);
         }
     }
 
@@ -55,9 +58,9 @@ class TaskStoreStatusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($user_id)
+    public function show($id)
     {
-        return Task_Store_Status::find($user_id);
+        return BankingStatus::find($user_id);
     }
 
     /**
@@ -69,13 +72,13 @@ class TaskStoreStatusController extends Controller
      */
     public function update(Request $request, $user_id)
     {
-        if(Task_Store_Status::where('user_id', $user_id)->exists()){
-            $Task_Store_Status=Task_Store_Status::find($user_id);
-            $Task_Store_Status->update($request->all());
-            return response($Task_Store_Status, 200);
+        if(BankingStatus::where('user_id', $user_id)->exists()){
+            $BankingStatus=BankingStatus::find($user_id);
+            $BankingStatus->update($request->all());
+            return response($BankingStatus, 200);
            }else{
             return response()->json([
-                "message" => "Task_Store_Status did not  updated"
+                "message" => "BankingStatus did not  updated"
               ], 404);
             }
     }

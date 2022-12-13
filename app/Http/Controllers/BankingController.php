@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Stores;
-use Illuminate\Http\Request;
 
-class StoresController extends Controller
+use Illuminate\Http\Request;
+use App\Models\Banking;
+class BankingController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,23 +13,8 @@ class StoresController extends Controller
      */
     public function index()
     {
-        return Stores::all();
+        return Banking::all();
     }
-
-    //get stores for the specified task
-    public function getStores($task_id) {
-        if (Stores::where('task_id', $task_id)->exists()){
-            $stores = Stores::where('task_id', $task_id)->get();
-            return response($stores, 200);}
-            else{
-                return response()->json([
-                    "message" => "stores not found"
-                  ], 404);
-            }
-          
-      }
-     
-    
 
     /**
      * Store a newly created resource in storage.
@@ -39,19 +24,17 @@ class StoresController extends Controller
      */
     public function store(Request $request)
     {
-        $stores = Stores::create([
-            'name' => $request->name,
+        $banking = Banking::create([
             'task_id'=>$request->task_id,
             'url'=>$request->url,
             'address'=>$request->address,
-            'latitude'=>$request->latitude,
-            'longitude'=>$request->longitude,
-            'embeddedmap'=>$request->embeddedmap
+            'embeddedmap'=>$request->embeddedmap,
+            'name'=>$request->name
         ]);
 
         return response()->json([
             'status'=>200,
-            'data'=>$stores]);
+            'data'=>$banking]);
     }
 
     /**
@@ -62,7 +45,7 @@ class StoresController extends Controller
      */
     public function show($id)
     {
-        return Stores::find($id);
+        //
     }
 
     /**
@@ -74,16 +57,7 @@ class StoresController extends Controller
      */
     public function update(Request $request, $id)
     {
-       if(Stores::where('id', $id)->exists()){
-        $stores=Stores::find($id);
-        $stores->update($request->all());
-        return response($stores, 200);
-       }else{
-        return response()->json([
-            "message" => "stores did not  updated"
-          ], 404);
-        }
-        
+        //
     }
 
     /**
@@ -96,5 +70,4 @@ class StoresController extends Controller
     {
         //
     }
-    
 }
